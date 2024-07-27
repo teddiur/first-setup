@@ -1,6 +1,6 @@
 #!/bin/bash
-apt update -y
-apt install git -y
+sudo apt update -y
+sudo apt install git -y
 
 declare -a fonts=(
     FiraCode
@@ -35,10 +35,10 @@ fc-cache -fv
 if which zsh; then
     echo "zsh já instalado"
 else
-    apt install zsh fzf -y
+    sudo apt install zsh fzf -y
     whereis zsh
-    usermod -s /usr/bin/zsh $(whoami)
-    chsh -s /usr/bin/zsh
+    sudo usermod -s /usr/bin/zsh $(whoami)
+    sudo chsh -s /usr/bin/zsh
 fi
 
 
@@ -46,14 +46,14 @@ fi
 if which code; then
     echo "VS Code já instalado"
 else
-    apt-get install wget gpg -y
+    sudo apt-get install wget gpg -y
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-    install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |tee /etc/apt/sources.list.d/vscode.list > /dev/null
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
     rm -f packages.microsoft.gpg
-    apt install apt-transport-https -y
-    apt update -y
-    apt install code -y
+    sudo apt install apt-transport-https -y
+    sudo apt update -y
+    sudo apt install code -y
     code --version
 fi
 
@@ -62,7 +62,7 @@ fi
 if which pycharm-community; then
     echo "Pycharm já instalado"
 else
-    snap install pycharm-community --classic
+    sudo snap install pycharm-community --classic
 fi
 
 
@@ -70,23 +70,22 @@ fi
 if which intellij-idea-community; then
     echo "Postman já instalado"
 else
-    snap install intellij-idea-community --classic
+    sudo snap install intellij-idea-community --classic
 fi
 
 
 if which psql; then
     echo "Postgres já instalado"
 else
-    export TZ=America/Sao_Paulo
-    apt install tzdata postgresql postgresql-contrib -y
-    systemctl start postgresql.service
+    sudo apt install postgresql postgresql-contrib -y
+    sudo systemctl start postgresql.service
 fi
 
 # install dbeaver
 if which dbeaver-ce; then
     echo "DBeaver já instalado"
 else
-    snap install dbeaver-ce
+    sudo snap install dbeaver-ce
 fi
 
 
@@ -94,7 +93,7 @@ fi
 if which pyenv; then
     echo "pyenv já instalado"
 else
-    apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+    sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
     curl https://pyenv.run | bash
     echo -e 'export PYENV_ROOT="$HOME/.pyenv"\nexport PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
     echo -e 'eval "$(pyenv init --path)"\neval "$(pyenv init -)"' >> ~/.zshrc
@@ -117,22 +116,22 @@ fi
 if which docker; then
     echo "Docker instalado"
 else
-    for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do apt-get remove $pkg; done
+    for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
     # Add Docker's official GPG key:
-    apt-get update
-    apt-get install ca-certificates curl
-    install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-    chmod a+r /etc/apt/keyrings/docker.asc
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
 
     # Add the repository to Apt sources:
     echo \
         "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    tee /etc/apt/sources.list.d/docker.list > /dev/null
-    apt-get update -y
-    apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-    docker run hello-world
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update -y
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    sudo docker run hello-world
 fi
 
 
@@ -175,7 +174,7 @@ else
     curl -o awscliv2.sig https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip.sig
     gpg --verify awscliv2.sig awscliv2.zip
     unzip awscliv2.zip
-    ./aws/install
+    sudo ./aws/install
 fi
 
 # install postman
@@ -191,7 +190,7 @@ fi
 if which obsidian; then
     echo "Obsidian já instalado"
 else
-    snap install obsidian --classic
+    sudo snap install obsidian --classic
 fi
 
 
@@ -199,8 +198,8 @@ fi
 if which java; then
     echo "Java já instalado"
 else
-    apt install default-jre -y
-    apt install default-jdk -y
+    sudo apt install default-jre -y
+    sudo apt install default-jdk -y
 fi
 
 
@@ -209,7 +208,7 @@ if which google-chrome; then
     echo "Chrome já instalado"
 else
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    dpkg -i google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
 fi
 
 echo "Acabou a instalação"
